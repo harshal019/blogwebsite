@@ -1,3 +1,14 @@
+# Node modules and logs
 node_modules/
+logs/
+*.log
+pids/
+.cache/
+
+# Environment variables
 .env
-.DS_Store
+
+# Database and dependencies
+*.sqlite
+*.db
+coverage/

@@ -11,16 +11,13 @@ import CommentRouote from './routes/Comment.js'
 import BlogLikeRoute from './routes/Bloglike.js'
 
 dotenv.config()
-
 const PORT = process.env.PORT
 const app = express()
 
 app.use(cookieParser())
 app.use(express.json())
-app.use(cors({
-    origin: process.env.FRONTEND_URL,
-    credentials: true
-}))
+app.use(express.urlencoded({ extended: true }))
+app.use(cors({ origin: 'http://localhost:5173', credentials: true }))
 
 
 // route setup  
@@ -34,13 +31,13 @@ app.use('/api/blog-like', BlogLikeRoute)
 
 
 
-mongoose.connect(process.env.MONGODB_CONN, )  //{ dbName: 'blog-content' }
+mongoose.connect(process.env.MONGODB_CONN,)  //{ dbName: 'blog-content' }
     .then(() => console.log('Database connected.'))
     .catch(err => console.log('Database connection failed.', err))
 
-app.listen(PORT, () => {
-    console.log('Server running on port:', PORT)
-})
+    app.listen(PORT, () => {
+        console.log(`Server is running on http://localhost:${PORT}`);
+    });
 
 
 app.use((err, req, res, next) => {

@@ -11,4 +11,4 @@ CategoryRoute.delete('/delete/:categoryid', onlyadmin, deleteCategory)
 CategoryRoute.get('/all-category', getAllCategory)
 
 
-export default CategoryRoute
+export default CategoryRoute 

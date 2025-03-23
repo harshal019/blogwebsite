@@ -1,6 +1,6 @@
 import cloudinary from "../config/cloudinary.js"
 import { handleError } from "../helpers/handleError.js"
-import bcryptjs from 'bcryptjs'
+import bcrypt from 'bcrypt'
 import User from "../models/user.js"
 
 export const getUser = async (req, res, next) => {
@@ -32,7 +32,7 @@ export const updateUser = async (req, res, next) => {
         user.bio = data.bio
 
         if (data.password && data.password.length >= 8) {
-            const hashedPassword = bcryptjs.hashSync(data.password)
+            const hashedPassword = bcrypt.hashSync(data.password)
             user.password = hashedPassword
         }
 
@@ -78,7 +78,7 @@ export const getAllUser = async (req, res, next) => {
 }
 export const deleteUser = async (req, res, next) => {
     try {
-        const { id } = req.params
+        const { id } = req.paramss
         const user = await User.findByIdAndDelete(id)
         res.status(200).json({
             success: true,

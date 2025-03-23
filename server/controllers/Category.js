@@ -2,13 +2,17 @@ import { handleError } from "../helpers/handleError.js"
 import Category from "../models/category.js"
 
 export const addCategory = async (req, res, next) => {
+    console.log("Data receved" ,req.body);
     try {
-        const { name, slug } = req.body
+        const { name, slug } = req.body;
+       
         const category = new Category({
             name, slug
         })
 
         await category.save()
+        console.log(category);
+
 
         res.status(200).json({
             success: true,
@@ -16,6 +20,7 @@ export const addCategory = async (req, res, next) => {
         })
 
     } catch (error) {
+        console.error('Error adding category:', error);
         next(handleError(500, error.message))
     }
 }

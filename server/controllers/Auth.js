@@ -1,5 +1,5 @@
 import { handleError } from "../helpers/handleError.js"
-import bcryptjs from 'bcryptjs'
+import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import User from "../models/user.js"
 
@@ -12,7 +12,7 @@ export const Register = async (req, res, next) => {
             next(handleError(409, 'User already registered.'))
         }
 
-        const hashedPassword = bcryptjs.hash(password)
+        const hashedPassword =await bcrypt.hash(password,10)
         // register user  
         const user = new User({
             name, email, password: hashedPassword
@@ -40,7 +40,7 @@ export const Login = async (req, res, next) => {
         }
         const hashedPassword = user.password
 
-        const comparePassword =await  bcryptjs.compare(password, hashedPassword)
+        const comparePassword =await bcrypt.compare(password, hashedPassword)
         if (!comparePassword) {
             next(handleError(404, 'Invalid login credentials.'))
         }
@@ -49,10 +49,12 @@ export const Login = async (req, res, next) => {
             _id: user._id,
             name: user.name,
             email: user.email,
+            role: user.role,
             avatar: user.avatar
         }, process.env.JWT_SECRET)
 
-
+        // console.log(token);
+        
         res.cookie('access_token', token, {
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production',
@@ -81,7 +83,7 @@ export const GoogleLogin = async (req, res, next) => {
         if (!user) {
             //  create new user 
             const password = Math.random().toString()
-            const hashedPassword = bcryptjs.hashSync(password)
+            const hashedPassword = await bcrypt.hashSync(password)
             const newUser = new User({
                 name, email, password: hashedPassword, avatar
             })
@@ -140,3 +142,32 @@ export const Logout = async (req, res, next) => {
         next(handleError(500, error.message))
     }
 }
+
+
+export const IsAdmin= async (req, res,next) => {
+
+    const { name, email, password } = req.body;
+  
+      try {
+          // Check if an admin with the given email already exists
+          let admin = await User.findOne({ email });
+          if (admin) return res.status(400).json({ msg: "Admin already exists" });
+  
+          // Hash the password
+          const hashedPassword = await bcrypt.hash(password, 10);
+  
+          // Create a new admin user
+          admin = new User({
+              name,
+              email,
+              password: hashedPassword,
+              role: "admin", // Explicitly setting role as "admin"
+          });
+  
+          await admin.save();
+          res.status(201).json({ msg: "Admin created successfully" });
+  
+      } catch (err) {
+          res.status(500).json({ msg: "Server error" });
+      }
+  };
