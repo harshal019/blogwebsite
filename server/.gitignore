@@ -1,0 +1,14 @@
+# Node modules and logs
+node_modules/
+logs/
+*.log
+pids/
+.cache/
+
+# Environment variables
+.env
+
+# Database and dependencies
+*.sqlite
+*.db
+coverage/
