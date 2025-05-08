@@ -42,7 +42,7 @@ A full-featured blog web app built with the **MERN stack**. Users can create, ed
 ```
 root/
 ├── backend/
-│   └── index.js, routes/, models/
+│   └── index.js, routes/, models/,config/ ,controllers/, middleware/
 ├── frontend/
 │   └── src/, App.jsx, main.jsx
 ├── .env
@@ -54,8 +54,8 @@ root/
 
 1. **Clone the Repo:**
    ```bash
-   git clone https://github.com/your-username/modern-blog-app.git
-   cd modern-blog-app
+   git clone https://github.com/harshal019/blogwebsite.git
+   cd blogwebsite
    ```
 
 2. **Install Frontend Packages:**
@@ -75,6 +75,8 @@ root/
 Create a `.env` file in `backend/`:
 
 ```
+FRONTEND_URL=your_frontend_url
+PORT=your_port
 MONGO_URI=your_mongodb_uri
 JWT_SECRET=your_jwt_secret
 CLOUDINARY_NAME=your_cloud_name
@@ -129,10 +131,10 @@ Can be deployed on AWS using:
 
 ## 🧑‍💻 Author
 
-Made with ❤️ by [Your Name]
+Made with ❤️ by Harshal Gharat
 
 ---
 
-## 📄 License
+<!-- ## 📄 License
 
-This project is open source and free to use under the MIT License.
+This project is open source and free to use under the MIT License. -->
