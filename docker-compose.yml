@@ -1,0 +1,27 @@
+version: "3.8"
+services:
+  frontend: 
+    image: 183631336907.dkr.ecr.us-east-2.amazonaws.com/writewave/frontend 
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    networks:
+      - app-network
+
+  backend:
+    image: 183631336907.dkr.ecr.us-east-2.amazonaws.com/writewave/backend
+    ports:
+      - "5000:5000"
+    env_file: 
+      - ./server/.env
+    networks:
+      - app-network
+
+
+
+
+
+networks:
+  app-network:
+    driver: bridge
